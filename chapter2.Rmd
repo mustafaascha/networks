@@ -1,0 +1,68 @@
+---
+title: "Notes - Douglas Luke, A User's Guide to Network Analysis in R"
+author: "Mustafa Ascha"
+date: "August 21, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(statnet)
+library(UserNetR)
+```
+
+## Chapter 2
+
+Jacob Moreno collected data on friendship networks of fourth graders (in the 1930s lol). Here's a visualization, according to gender:
+
+```{r}
+
+data(Moreno)
+
+gender <- Moreno %v% "gender"
+
+plot(Moreno, vertex.col = gender + 2, vertex.cex = 1.2)
+
+```
+
+Okay, so that's hilarious. It looks like there was only one pair of boy-girl friends. 
+
+## Describing the previous network
+
+Use the following: 
+* Size (number of nodes)
+* Density (Proportion of potential connections)
+* Components (Number of distinct sub-networks)
+* Diameter (Compactness)
+* Clustering Coefficient
+
+```{r}
+
+summary(Moreno, print.adj = FALSE)
+
+```
+
+`r network.size(Moreno)` is the network **size** of Moreno. The previous summary shows some of the other attributes. 
+
+Note that the maximum number of edges among nodes in a **directed** graph is *k* `*` *(k - 1)*. Where *L* is the number of observed edges, the **density** is *L* / *k* `*` *(k - 1)*. 
+
+Similarly the maximum number of edges among nodes in an **undirected** graph is *(k* `*` *(k - 1)) / 2*. Where *L* is the number of observed edges, the **density** is *2L* / *k* `*` *(k - 1)*.
+
+`r gden(Moreno)` is the network **density** of Moreno. 
+
+A component is a type of subgroup, though there are many other ways to define a subgroup. A component is defined as a group of nodes that has no connections to any other nodes. There are `r components(Moreno)` **components** in Moreno. 
+
+Diameter is another interesting measure. Of the shortest paths across all pairs of nodes, the longest is called the diameter. This is a worst-case scenario for the transferral of information, so it kinda represents the farthest a message could travel if everyone wanted to send messages to everyone else. A shortest path is called a "geodesic", so the diameter is the maximum geodesic. The **diameter** of Moreno is `r max(geodist(component.largest(Moreno, result = "graph"))$gdist)`. 
+
+To understand the clustering coefficient, first consider closure: closure is the process whereby two people who share a common friend become friends, themselves. This is measured in terms of *transitivity*, which is the proportion of closed three-person relationships to the proportion of all three-person relationships. The **transitivity** of Moreno is `r gtrans(Moreno, mode = "graph")`. This is one type of clustering coefficient. 
+
+## Chapter 3
+
+
+
+
+
+
+
+
+

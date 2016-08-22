@@ -58,7 +58,51 @@ To understand the clustering coefficient, first consider closure: closure is the
 
 ## Chapter 3
 
+There are two text representations of networks to know well--adjacency matrices and edge lists. 
 
+An adjacency matrix is a square matrix with a 1 representing each connection (for directed graphs, going from row -> column). Undirected graphs have triangular matrices. 
+
+An edge list is a two-variable table where one variable represents a starting node, and the second variable represents the end node.
+
+Network formats include Pajek (.net or .paj files), GraphML, and UCINet DL files. 
+
+Different packages have different network objects with different attributes and different methods (different redundancy, too...). However, the two packages to know at this point are `statnet` and `igraph`, which can work together using the `intergraph` package. 
+
+Chapter 3 seems mainly useful insofar as it introduces various network object attributes. 
+
+* `network.vertex.names(networkObject)` pulls the vertex names
+* `as.sociomatrix(networkObject)` produces an adjacency matrix--this reminds me of the reshaping functions in tidyr and reshape2
+* `set.vertex.attribute(networkObject, attribute, attributeValues)` would set the attribute of networkObject vertices to attributeValues. Rather than setting attributes, I should look into how I can read edge list data with attributes as extra columns
+* `get.vertex.attribute(networkObject, attribute)` and `networkObject %v% attribute` do the same thing, but `%v%` is an infix operator
+* `list.vertex.attributes(networkObject)` shows the verex attributes present in a network object. 
+* `list.edge.attributes(networkObject)`, `get.edge.attributes(networkObject, attribute)`, `networkObject %e% attribute`, and `set.edge.attribute(networkObject, attribute, attributeValues)` are the corresponding edge functions 
+
+Edge attributes come in handy when working with **valued networks**, which have some numeric value associated with the edge. This is interesting/useful. 
+
+For an adjacency matrix with valued edges (instead of the binary values presented earlier), the network can be read by:
+
+```{r valuedRead}
+netVal <- rbind(c(0,2,3,0,0),
+                c(0,0,3,1,0),
+                c(0,1,0,0,0),
+                c(0,0,0,0,0),
+                c(0,0,2,0,0))
+
+netval <- network(netval, matrix.type = "adjacency", 
+                  ignore.eval = FALSE, names.eval = "name")
+```
+
+And now, netVal edges have a "name" attribute. 
+
+Here's an example using the `statnet` package:
+
+```{r statnetChapter3}
+
+library(statnet)
+
+
+
+```
 
 
 

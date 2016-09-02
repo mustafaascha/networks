@@ -20,7 +20,7 @@ pt_diags <-
 # split by patient
 
 pt_diags <- 
-  split(pt_diags$patient_id, pt_diags$diagnosis)
+  split(pt_diags$diagnosis, pt_diags$patient_id)
 
 # make combinations
 

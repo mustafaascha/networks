@@ -40,6 +40,15 @@ pt_diags <-
 
 # great, looks like this works. Now to make it work for gigabytes of data.....will probably use more dplyr and less base-r
 
+# for good measure, let's do a visualization of this simulated network. 
 
+# warning: this loads a lot of libraries
+library(statnet)
 
+pt_diags <- 
+  network(pt_diags, directed = FALSE, loops = FALSE)
+
+plot(pt_diags)
+
+#that actually looks really cool. changing the network construction or simulated data would make it look different, and might be worth exploring
 
